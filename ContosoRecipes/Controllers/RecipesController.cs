@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ContosoRecipes.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,22 +8,41 @@ using System.Threading.Tasks;
 
 namespace ContosoRecipes.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]")] //    /api/recipes
     [ApiController]
     public class RecipesController : ControllerBase
     {
         [HttpGet]
-        public ActionResult GetRecipes()
-           
+        public ActionResult GetRecipes([FromQuery] int count)
+
         {
-            string[] recipes = { "Oxtail", "Curry Chicken", "Dumplings" };
+            Recipe[] recipes = {
+                new() {Title = "Oxtail" },
+                new() {Title = "Curry Chicken" },
+                new() {Title = "Dumplings" }
+
+            };
             if (!recipes.Any())
                 return NotFound();
-            return Ok(recipes);
+
+            return Ok(recipes.Take(count));
 
         }
-        [HttpDelete]
-        public ActionResult DeleteRecipes()
+
+        [HttpPost]
+        public ActionResult CreateNewRecipe([FromBody] Recipe newRecipe) {
+
+            //validate and save to database
+            bool badThingsHappended = false;
+
+            if (badThingsHappended)
+                return BadRequest();
+
+            return Created("", newRecipe);
+        }
+
+        [HttpDelete("{id}")] // api/recipes/{id}
+        public ActionResult DeleteRecipes(string id)
         {
             bool badThingsHappended = false;
 
