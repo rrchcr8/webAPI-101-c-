@@ -16,8 +16,19 @@ namespace ContosoRecipes.Controllers
            
         {
             string[] recipes = { "Oxtail", "Curry Chicken", "Dumplings" };
+            if (!recipes.Any())
+                return NotFound();
             return Ok(recipes);
 
+        }
+        [HttpDelete]
+        public ActionResult DeleteRecipes()
+        {
+            bool badThingsHappended = false;
+
+            if (badThingsHappended)
+                return BadRequest();
+            return NoContent();
         }
     }
 }
