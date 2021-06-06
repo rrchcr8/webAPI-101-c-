@@ -12,10 +12,11 @@ namespace ContosoRecipes.Controllers
     public class RecipesController : ControllerBase
     {
         [HttpGet]
-        public string[] GetDishes()
+        public ActionResult GetRecipes()
+           
         {
-            string[] dishes = { "Oxtail", "Curry Chicken", "Dumplings" };
-            return dishes;
+            string[] recipes = { "Oxtail", "Curry Chicken", "Dumplings" };
+            return Ok(recipes);
 
         }
     }
